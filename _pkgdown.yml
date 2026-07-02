@@ -1,0 +1,18 @@
+url: https://uzairkhan11w.github.io/DataSum/
+template:
+  bootstrap: 5
+  bootswatch: flatly
+navbar:
+  structure:
+    left: [intro, reference, articles, news]
+    right: [github]
+reference:
+  - title: Core diagnostics
+    contents:
+      - summarize_vector
+      - summarize_data
+      - profile_data
+  - title: Reports and app
+    contents:
+      - datasum_report
+      - run_datasum_app
