@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: "If you use DataSum in research, teaching, or software, please cite it using this metadata."
+title: "DataSum: Modern Data Summaries and Diagnostic Reports for Statistical Analysis"
+type: software
+version: 1.0.0
+date-released: 2026-07-02
+license: GPL-3.0-or-later
+repository-code: "https://github.com/Uzairkhan11w/DataSum"
+url: "https://github.com/Uzairkhan11w/DataSum"
+keywords:
+  - R
+  - statistics
+  - data-summary
+  - diagnostics
+  - reproducible-research
+  - shiny
+  - quarto
+authors:
+  - family-names: "Khan"
+    given-names: "Uzair Javid"
+    email: "uzairkhan11w@gmail.com"
+  - family-names: "Shah"
+    given-names: "Immad Ahmad"
+  - family-names: "Mishra"
+    given-names: "Sukhdev"
+preferred-citation:
+  type: software
+  authors:
+    - family-names: "Khan"
+      given-names: "Uzair Javid"
+    - family-names: "Shah"
+      given-names: "Immad Ahmad"
+    - family-names: "Mishra"
+      given-names: "Sukhdev"
+  title: "DataSum: Modern Data Summaries and Diagnostic Reports for Statistical Analysis"
+  version: 1.0.0
+  year: 2026
+  url: "https://github.com/Uzairkhan11w/DataSum"

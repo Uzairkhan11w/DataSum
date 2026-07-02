@@ -1,76 +1,158 @@
+<p align="center">
+  <img src="man/figures/datasum-banner.svg" width="100%" alt="DataSum research diagnostics banner">
+</p>
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<p align="center">
+  <a href="https://github.com/Uzairkhan11w/DataSum/actions/workflows/R-CMD-check.yaml"><img src="https://github.com/Uzairkhan11w/DataSum/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a>
+  <a href="https://CRAN.R-project.org/package=DataSum"><img src="https://www.r-pkg.org/badges/version/DataSum" alt="CRAN status"></a>
+  <a href="https://github.com/Uzairkhan11w/DataSum/pulls"><img src="https://img.shields.io/badge/contributions-welcome-0F766E.svg" alt="Contributions welcome"></a>
+</p>
 
-# DataSum
+<p align="center"><strong>From first look to reproducible report.</strong></p>
 
-<!-- badges: start -->
+DataSum is an R toolkit for rigorous first-pass data diagnostics. It helps
+statisticians, researchers, professors, scientists, and students move from a
+raw data frame to transparent summaries, quality warnings, distribution checks,
+group comparisons, and reproducible reports.
 
-[![CRAN status](https://www.r-pkg.org/badges/version/DataSum)](https://CRAN.R-project.org/package=DataSum)
-[![R-CMD-check](https://github.com/Uzairkhan11w/DataSum/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Uzairkhan11w/DataSum/actions/workflows/R-CMD-check.yaml)
-<!-- badges: end -->
+> **Release status:** GitHub contains the new DataSum 1.0 API. CRAN currently
+> serves the legacy 0.1.1 release, so install from GitHub to use the functions
+> documented below.
 
-DataSum is a modern diagnostic companion for statisticians, professors,
-scientists, and analysts. It turns an ordinary data frame into robust summaries,
-missingness checks, outlier flags, normality diagnostics, grouped profiles, and
-publication-ready report scaffolds.
+## Start in 60 seconds
 
-The 1.0 API is intentionally clean:
-
-- `summarize_vector()` summarizes one variable.
-- `summarize_data()` summarizes a data frame, optionally by groups.
-- `profile_data()` creates a dataset-level diagnostic profile.
-- `datasum_report()` writes a reproducible Quarto diagnostic report.
-- `run_datasum_app()` launches an interactive Shiny app.
-
-## Installation
-
-``` r
-install.packages("DataSum")
-```
-
-Development version:
-
-``` r
-# install.packages("remotes")
+```r
+install.packages("remotes")
 remotes::install_github("Uzairkhan11w/DataSum")
-```
 
-## Example
-
-``` r
 library(DataSum)
 
-summarize_vector(c(1, 2, 2, NA, 10), name = "score")
-
-summarize_data(iris, by = "Species")
-
+summary <- summarize_data(iris, by = "Species", digits = 3)
 profile <- profile_data(iris)
-profile$dataset
 profile$warnings
 ```
 
-## Diagnostic reports
+## What DataSum gives you
 
-``` r
-report_path <- datasum_report(iris, format = "qmd", render = FALSE)
-report_path
+| Capability | What it answers |
+|---|---|
+| NA-aware summaries | How much usable data is present in every variable? |
+| Robust statistics | What do median, IQR, MAD, skewness, and excess kurtosis reveal? |
+| Mode handling | Are there tied modes, and how frequent are they? |
+| Outlier diagnostics | Which variables exceed the transparent 1.5 x IQR rule? |
+| Normality diagnostics | Which test ran, what was its p-value, and what does the decision mean? |
+| Grouped profiles | How do variables differ across treatments, classes, or cohorts? |
+| Analyst warnings | Which missingness, duplicate, outlier, or distribution issues need attention? |
+| Reproducible reports | Can the diagnostic record be shared as Quarto HTML, PDF, or DOCX? |
+| Interactive app | Can a non-programmer upload a CSV and explore the same diagnostics? |
+
+## Clean 1.0 API
+
+| Function | Purpose |
+|---|---|
+| `summarize_vector()` | One-row diagnostic summary for a single vector |
+| `summarize_data()` | One row per variable, optionally within groups |
+| `profile_data()` | Dataset overview, variable summaries, and warnings |
+| `datasum_report()` | Quarto diagnostic report source and optional rendering |
+| `run_datasum_app()` | Interactive Shiny interface |
+
+## Try the diagnostics
+
+```r
+summarize_vector(
+  c(12, 14, 14, 16, NA, 21, 45),
+  name = "response_time",
+  digits = 2
+)
+
+summarize_data(iris, by = "Species", digits = 2)
+
+profile <- profile_data(airquality, digits = 2)
+profile$dataset
+profile$summary
+profile$warnings
 ```
 
-Set `render = TRUE` with the optional `quarto` package to render HTML, PDF, or
-DOCX output.
+Normality output is deliberately cautious. DataSum reports **evidence against
+normality** or **no evidence against normality**; it does not claim that a
+sample has proven a population distribution.
 
-## Interactive app
+## Launch the app
 
-``` r
+```r
 run_datasum_app()
 ```
 
-The Shiny app supports CSV upload, variable inspection, diagnostic summaries,
-warnings, quick plots, and report download.
+The Shiny app opens in your browser and provides:
 
-## Why this exists
+- CSV upload
+- dataset and variable diagnostics
+- warning tables
+- numeric histograms and categorical bar charts
+- downloadable Quarto report source
 
-First-pass data summaries are often either too shallow for serious statistical
-work or too scattered across many manual commands. DataSum aims to make the
-first diagnostic pass rigorous, teachable, reproducible, and fast enough to be
-part of everyday research workflows.
+This launches locally on your computer. A public hosted version is part of the
+project roadmap.
+
+## Create a reproducible report
+
+Create a portable Quarto source file without extra software:
+
+```r
+report <- datasum_report(
+  iris,
+  path = "iris-diagnostic-report.qmd",
+  format = "qmd",
+  render = FALSE
+)
+```
+
+With the optional `quarto` package and Quarto CLI installed, render directly:
+
+```r
+datasum_report(
+  iris,
+  path = "iris-diagnostic-report.html",
+  format = "html",
+  render = TRUE
+)
+```
+
+The report contains the dataset overview, variable diagnostics, analyst
+warnings, formula definitions, and interpretation guidance.
+
+## Designed for trust
+
+- Tested by GitHub Actions on current R releases for Linux, Windows, and macOS
+- Deterministic tied-mode output
+- Safe behavior for missing, empty, constant, and non-numeric vectors
+- Explicit formulas and thresholds
+- No silent two-decimal rounding
+- Source, tests, documentation, and roadmap kept in public
+
+## Project links
+
+- [Roadmap](ROADMAP.md)
+- [Contributing guide](CONTRIBUTING.md)
+- [Support](SUPPORT.md)
+- [Security policy](SECURITY.md)
+- [Changelog](NEWS.md)
+- [Citation metadata](CITATION.cff)
+
+## Citation
+
+GitHub displays a **Cite this repository** button from `CITATION.cff`. From R,
+you can also run:
+
+```r
+citation("DataSum")
+```
+
+## Community
+
+DataSum is being built in public. Bug reports, statistical-method discussions,
+teaching use cases, documentation improvements, and research workflow ideas are
+welcome through [GitHub Issues](https://github.com/Uzairkhan11w/DataSum/issues).
+
+DataSum is diagnostic software, not a substitute for study design, domain
+expertise, or model-specific assumption checking.
