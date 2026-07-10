@@ -147,14 +147,14 @@ warnings, formula definitions, and interpretation guidance.
 
 ## Project links
 
-- [Roadmap](ROADMAP.md)
-- [Contributing guide](CONTRIBUTING.md)
-- [Support](SUPPORT.md)
-- [Security policy](SECURITY.md)
-- [Code of conduct](CODE_OF_CONDUCT.md)
-- [CRAN release checklist](CRAN-RELEASE.md)
-- [Changelog](NEWS.md)
-- [Citation metadata](CITATION.cff)
+- [Roadmap](https://github.com/Uzairkhan11w/DataSum/blob/master/ROADMAP.md)
+- [Contributing guide](https://github.com/Uzairkhan11w/DataSum/blob/master/CONTRIBUTING.md)
+- [Support](https://github.com/Uzairkhan11w/DataSum/blob/master/SUPPORT.md)
+- [Security policy](https://github.com/Uzairkhan11w/DataSum/blob/master/SECURITY.md)
+- [Code of conduct](https://github.com/Uzairkhan11w/DataSum/blob/master/CODE_OF_CONDUCT.md)
+- [CRAN release checklist](https://github.com/Uzairkhan11w/DataSum/blob/master/CRAN-RELEASE.md)
+- [Changelog](https://github.com/Uzairkhan11w/DataSum/blob/master/NEWS.md)
+- [Citation metadata](https://github.com/Uzairkhan11w/DataSum/blob/master/CITATION.cff)
 
 ## Citation
 
