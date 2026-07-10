@@ -1,0 +1,37 @@
+name: Feature or method request
+description: Suggest a new diagnostic, report feature, app workflow, or statistical method
+title: "Feature: "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for new diagnostics, teaching features, report improvements, Shiny app ideas, or statistical-method proposals.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What would this help a statistician, researcher, professor, scientist, or student do better?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the behavior, output, or workflow you want.
+    validations:
+      required: true
+  - type: textarea
+    id: statistical_details
+    attributes:
+      label: Statistical details or references
+      description: Include formulas, thresholds, assumptions, or references if this changes statistical behavior.
+    validations:
+      required: false
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Are there existing R packages, functions, or workflows that partly solve this?
+    validations:
+      required: false
