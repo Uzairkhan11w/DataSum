@@ -1,0 +1,45 @@
+name: Bug report
+description: Report something that is broken or statistically incorrect
+title: "Bug: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve DataSum. Please include a small reproducible example when possible.
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the bug or incorrect result.
+    validations:
+      required: true
+  - type: textarea
+    id: reprex
+    attributes:
+      label: Minimal reproducible example
+      description: Paste the smallest R code and data needed to reproduce the problem.
+      render: r
+    validations:
+      required: false
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should DataSum have done instead?
+    validations:
+      required: false
+  - type: input
+    id: datasum_version
+    attributes:
+      label: DataSum version
+      placeholder: "packageVersion('DataSum')"
+    validations:
+      required: false
+  - type: input
+    id: r_version
+    attributes:
+      label: R version and operating system
+      placeholder: "R 4.x on Windows/macOS/Linux"
+    validations:
+      required: false
