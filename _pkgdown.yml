@@ -7,6 +7,9 @@ navbar:
     left: [intro, reference, articles, news]
     right: [github]
 reference:
+  - title: Package overview
+    contents:
+      - DataSum-package
   - title: Core diagnostics
     contents:
       - summarize_vector
