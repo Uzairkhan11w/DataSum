@@ -151,6 +151,8 @@ warnings, formula definitions, and interpretation guidance.
 - [Contributing guide](CONTRIBUTING.md)
 - [Support](SUPPORT.md)
 - [Security policy](SECURITY.md)
+- [Code of conduct](CODE_OF_CONDUCT.md)
+- [CRAN release checklist](CRAN-RELEASE.md)
 - [Changelog](NEWS.md)
 - [Citation metadata](CITATION.cff)
 
