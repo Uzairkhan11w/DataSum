@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: DataSum support guide
+    url: https://github.com/Uzairkhan11w/DataSum/blob/master/SUPPORT.md
+    about: Read how to ask good support questions.
+  - name: Security policy
+    url: https://github.com/Uzairkhan11w/DataSum/blob/master/SECURITY.md
+    about: Please report security concerns privately.
