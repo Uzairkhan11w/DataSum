@@ -6,6 +6,7 @@
   <a href="https://github.com/Uzairkhan11w/DataSum/actions/workflows/R-CMD-check.yaml"><img src="https://github.com/Uzairkhan11w/DataSum/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a>
   <a href="https://CRAN.R-project.org/package=DataSum"><img src="https://www.r-pkg.org/badges/version/DataSum" alt="CRAN status"></a>
   <a href="https://github.com/Uzairkhan11w/DataSum/pulls"><img src="https://img.shields.io/badge/contributions-welcome-0F766E.svg" alt="Contributions welcome"></a>
+  <a href="https://doi.org/10.5281/zenodo.21352624"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.21352624.svg" alt="Zenodo DOI"></a>
 </p>
 
 <p align="center"><strong>From first look to reproducible report.</strong></p>
@@ -15,15 +16,19 @@ statisticians, researchers, professors, scientists, and students move from a
 raw data frame to transparent summaries, quality warnings, distribution checks,
 group comparisons, and reproducible reports.
 
-> **Release status:** GitHub contains the new DataSum 1.0 API. CRAN currently
-> serves the legacy 0.1.1 release, so install from GitHub to use the functions
-> documented below.
+> **Release status:** DataSum 1.0.0 is available from
+> [CRAN](https://CRAN.R-project.org/package=DataSum), the
+> [GitHub v1.0.0 release](https://github.com/Uzairkhan11w/DataSum/releases/tag/v1.0.0),
+> and the [Zenodo archive](https://doi.org/10.5281/zenodo.21352624).
 
 ## Start in 60 seconds
 
 ```r
-install.packages("remotes")
-remotes::install_github("Uzairkhan11w/DataSum")
+install.packages("DataSum")
+
+# Development version:
+# install.packages("remotes")
+# remotes::install_github("Uzairkhan11w/DataSum")
 
 library(DataSum)
 
@@ -139,12 +144,26 @@ warnings, formula definitions, and interpretation guidance.
 - [Code of conduct](https://github.com/Uzairkhan11w/DataSum/blob/master/CODE_OF_CONDUCT.md)
 - [CRAN release checklist](https://github.com/Uzairkhan11w/DataSum/blob/master/CRAN-RELEASE.md)
 - [Changelog](https://github.com/Uzairkhan11w/DataSum/blob/master/NEWS.md)
+- [Zenodo v1.0.0 archive](https://doi.org/10.5281/zenodo.21352624)
 - [Citation metadata](https://github.com/Uzairkhan11w/DataSum/blob/master/CITATION.cff)
 
 ## Citation
 
-GitHub displays a **Cite this repository** button from `CITATION.cff`. From R,
-you can also run:
+GitHub displays a **Cite this repository** button from `CITATION.cff`.
+
+**Preferred citation for the exact v1.0.0 software archive**
+
+Khan, Uzair Javid, Immad Ahmad Shah, and Sukhdev Mishra (2026).
+*DataSum: Modern Data Summaries and Diagnostic Reports for Statistical Analysis*
+(Version 1.0.0) [R package]. Zenodo.
+<https://doi.org/10.5281/zenodo.21352624>
+
+- Exact version DOI: [10.5281/zenodo.21352624](https://doi.org/10.5281/zenodo.21352624)
+- All-versions Zenodo DOI: [10.5281/zenodo.21352623](https://doi.org/10.5281/zenodo.21352623)
+- CRAN package DOI: [10.32614/CRAN.package.DataSum](https://doi.org/10.32614/CRAN.package.DataSum)
+
+Use the version DOI for a reproducible scholarly citation and the concept DOI
+when referring to DataSum across all releases. From R, you can also run:
 
 ```r
 citation("DataSum")

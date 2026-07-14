@@ -3,10 +3,21 @@ message: "If you use DataSum in research, teaching, or software, please cite it 
 title: "DataSum: Modern Data Summaries and Diagnostic Reports for Statistical Analysis"
 type: software
 version: 1.0.0
-date-released: 2026-07-02
+date-released: "2026-07-14"
 license: GPL-3.0-or-later
 repository-code: "https://github.com/Uzairkhan11w/DataSum"
 url: "https://github.com/Uzairkhan11w/DataSum"
+doi: "10.5281/zenodo.21352624"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.21352624"
+    description: "Version-specific Zenodo archive for DataSum 1.0.0."
+  - type: doi
+    value: "10.5281/zenodo.21352623"
+    description: "Zenodo concept DOI for all DataSum versions."
+  - type: doi
+    value: "10.32614/CRAN.package.DataSum"
+    description: "CRAN package DOI."
 keywords:
   - R
   - statistics
@@ -35,4 +46,5 @@ preferred-citation:
   title: "DataSum: Modern Data Summaries and Diagnostic Reports for Statistical Analysis"
   version: 1.0.0
   year: 2026
-  url: "https://github.com/Uzairkhan11w/DataSum"
+  doi: "10.5281/zenodo.21352624"
+  url: "https://doi.org/10.5281/zenodo.21352624"
