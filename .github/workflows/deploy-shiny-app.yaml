@@ -1,0 +1,93 @@
+name: Deploy DataSum Shiny app
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - "R/**"
+      - "inst/shiny-app/**"
+      - "DESCRIPTION"
+      - "NAMESPACE"
+      - ".github/workflows/deploy-shiny-app.yaml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-datasum-shiny
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SHINYAPPS_ACCOUNT: ${{ secrets.SHINYAPPS_ACCOUNT }}
+      SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN }}
+      SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET }}
+      SHINYAPP_NAME: datasum
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: release
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::remotes
+            any::rsconnect
+            any::shiny
+
+      - name: Install DataSum from this exact GitHub commit
+        shell: Rscript {0}
+        run: |
+          remotes::install_github(
+            repo = "Uzairkhan11w/DataSum",
+            ref = Sys.getenv("GITHUB_SHA"),
+            upgrade = "never",
+            dependencies = FALSE
+          )
+
+      - name: Smoke test the public app entry point
+        shell: Rscript {0}
+        run: |
+          app <- source("inst/shiny-app/app.R", local = TRUE)$value
+          stopifnot(inherits(app, "shiny.appobj"))
+
+      - name: Explain how to activate public deployment
+        if: ${{ env.SHINYAPPS_ACCOUNT == '' || env.SHINYAPPS_TOKEN == '' || env.SHINYAPPS_SECRET == '' }}
+        run: |
+          {
+            echo "### Public deployment is not configured yet"
+            echo ""
+            echo "Add SHINYAPPS_ACCOUNT, SHINYAPPS_TOKEN, and SHINYAPPS_SECRET as GitHub Actions secrets, then run this workflow again."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Deploy to shinyapps.io
+        if: ${{ env.SHINYAPPS_ACCOUNT != '' && env.SHINYAPPS_TOKEN != '' && env.SHINYAPPS_SECRET != '' }}
+        shell: Rscript {0}
+        run: |
+          rsconnect::setAccountInfo(
+            name = Sys.getenv("SHINYAPPS_ACCOUNT"),
+            token = Sys.getenv("SHINYAPPS_TOKEN"),
+            secret = Sys.getenv("SHINYAPPS_SECRET")
+          )
+          rsconnect::deployApp(
+            appDir = "inst/shiny-app",
+            appName = Sys.getenv("SHINYAPP_NAME"),
+            appTitle = "DataSum",
+            launch.browser = FALSE,
+            forceUpdate = TRUE
+          )
+
+      - name: Publish deployed app URL
+        if: ${{ env.SHINYAPPS_ACCOUNT != '' && env.SHINYAPPS_TOKEN != '' && env.SHINYAPPS_SECRET != '' }}
+        run: |
+          {
+            echo "### DataSum public app"
+            echo ""
+            echo "https://$SHINYAPPS_ACCOUNT.shinyapps.io/$SHINYAPP_NAME/"
+          } >> "$GITHUB_STEP_SUMMARY"
