@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f8f7">
+    <meta name="description" content="Explore CSV data summaries, missingness, outliers, and distributions in your browser. Your data stays on your device.">
+    <title>DataSum | A clearer first look</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#workspace">Skip to workspace</a>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="DataSum home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="brand-name">DataSum<span class="brand-dot">.</span></span>
+        <span class="brand-divider"></span>
+        <span class="brand-caption">STATISTICS, MADE CLEAR</span>
+      </a>
+      <nav class="top-links" aria-label="Project links">
+        <a href="https://uzairkhan11w.github.io/DataSum/">Documentation</a>
+        <a href="https://github.com/Uzairkhan11w/DataSum">GitHub <span aria-hidden="true">↗</span></a>
+        <span class="privacy-pill"><span class="privacy-dot"></span> Runs in your browser</span>
+      </nav>
+    </header>
+
+    <main id="workspace" class="page-shell">
+      <section class="intro" aria-labelledby="page-title">
+        <div class="intro-copy">
+          <p class="eyebrow"><span class="eyebrow-line"></span> YOUR DATA, IN CONTEXT</p>
+          <h1 id="page-title">A clearer first look<br>at your <span>data.</span></h1>
+          <p class="intro-text">Explore the shape, quality, and patterns in a dataset before you begin the deeper analysis.</p>
+          <div class="intro-note"><span class="note-icon" aria-hidden="true">✳</span> Private by design. Your file never leaves this device.</div>
+        </div>
+
+        <div class="upload-card" id="drop-zone">
+          <div class="upload-topline"><span class="upload-kicker">START WITH A CSV</span><span class="file-limit">UP TO 25 MB</span></div>
+          <div class="upload-body">
+            <div class="upload-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M5 14.5v3A2.5 2.5 0 0 0 7.5 20h9a2.5 2.5 0 0 0 2.5-2.5v-3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <p class="upload-title">Drop your file here</p>
+              <p class="upload-subtitle">or <button class="text-button" id="browse-button" type="button">browse files</button></p>
+            </div>
+          </div>
+          <div class="upload-bottomline"><span>CSV UTF-8 or comma-separated</span><button class="sample-button" id="sample-button" type="button"><span aria-hidden="true">✦</span> Try example data</button></div>
+          <input id="file-input" type="file" accept=".csv,text/csv" hidden>
+        </div>
+      </section>
+
+      <div id="status-message" class="status-message" role="status" aria-live="polite" hidden></div>
+
+      <section class="workspace-section" aria-label="Dataset workspace">
+        <div class="dataset-heading">
+          <div class="dataset-title-wrap">
+            <span class="dataset-icon" aria-hidden="true">▤</span>
+            <div><p class="section-kicker">CURRENT DATASET</p><h2 id="dataset-name">Example study data</h2></div>
+            <span id="sample-badge" class="example-badge">ILLUSTRATIVE SAMPLE</span>
+          </div>
+          <button id="download-button" class="download-button" type="button" disabled><span aria-hidden="true">↓</span> Export summary</button>
+        </div>
+
+        <div class="metric-grid" aria-label="Dataset overview">
+          <article class="metric-card metric-primary"><div class="metric-label">OBSERVATIONS <span>01</span></div><div class="metric-value" id="metric-rows">—</div><div class="metric-foot">rows in this dataset</div><span class="metric-mark mark-rows" aria-hidden="true">↘</span></article>
+          <article class="metric-card"><div class="metric-label">VARIABLES <span>02</span></div><div class="metric-value" id="metric-columns">—</div><div class="metric-foot">columns to explore</div><span class="metric-mark mark-columns" aria-hidden="true">▥</span></article>
+          <article class="metric-card"><div class="metric-label">MISSING CELLS <span>03</span></div><div class="metric-value" id="metric-missing">—</div><div class="metric-foot" id="metric-missing-foot">across all variables</div><span class="metric-mark mark-missing" aria-hidden="true">◌</span></article>
+          <article class="metric-card"><div class="metric-label">COMPLETENESS <span>04</span></div><div class="metric-value" id="metric-complete">—</div><div class="metric-foot">of all data cells present</div><span class="metric-mark mark-complete" aria-hidden="true">↗</span></article>
+        </div>
+
+        <div class="tab-row" role="tablist" aria-label="Dataset views">
+          <button class="tab-button is-active" role="tab" aria-selected="true" aria-controls="panel-overview" id="tab-overview" data-tab="overview"><span class="tab-symbol">◫</span> Overview</button>
+          <button class="tab-button" role="tab" aria-selected="false" aria-controls="panel-variables" id="tab-variables" data-tab="variables"><span class="tab-symbol">☷</span> Variables <span id="variable-count" class="tab-count">0</span></button>
+          <button class="tab-button" role="tab" aria-selected="false" aria-controls="panel-explore" id="tab-explore" data-tab="explore"><span class="tab-symbol">⌁</span> Explore</button>
+          <span class="tab-spacer"></span><span class="updated-note"><span class="live-dot"></span> Live analysis</span>
+        </div>
+
+        <section class="tab-panel is-visible" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
+          <div class="overview-grid">
+            <article class="surface-card missing-card">
+              <div class="card-heading"><div><p class="section-kicker">DATA QUALITY</p><h3>Missingness by variable</h3></div><span class="card-index">01 / QUALITY</span></div>
+              <p class="card-description">A quick scan of where empty values appear.</p>
+              <div id="missingness-list" class="missingness-list"></div>
+              <div id="missingness-empty" class="empty-inline" hidden>No empty cells found. A tidy start.</div>
+              <div class="card-footnote"><span class="legend-dot"></span> Missing values <span class="footnote-total" id="missingness-total">0 total</span></div>
+            </article>
+
+            <article class="surface-card reading-card">
+              <div class="card-heading"><div><p class="section-kicker">WHAT TO NOTICE</p><h3>Quick read</h3></div><span class="sparkle" aria-hidden="true">✳</span></div>
+              <p class="card-description">Signals worth a closer look before modeling.</p>
+              <div id="insight-list" class="insight-list"></div>
+            </article>
+          </div>
+
+          <article class="surface-card preview-card">
+            <div class="card-heading preview-heading"><div><p class="section-kicker">A PEEK INSIDE</p><h3>First rows</h3></div><span id="preview-caption" class="card-index">FIRST 8 OBSERVATIONS</span></div>
+            <div class="table-scroll"><table class="data-table preview-table"><thead id="preview-head"></thead><tbody id="preview-body"></tbody></table></div>
+            <div class="table-bottomline"><span id="preview-count">Showing a preview</span><button class="table-link" type="button" data-open-tab="variables">View variable summaries <span aria-hidden="true">→</span></button></div>
+          </article>
+        </section>
+
+        <section class="tab-panel" role="tabpanel" id="panel-variables" aria-labelledby="tab-variables" hidden>
+          <article class="surface-card variables-card">
+            <div class="card-heading variables-heading"><div><p class="section-kicker">VARIABLE PROFILE</p><h3>Every column, at a glance</h3></div>
+              <label class="search-box"><span aria-hidden="true">⌕</span><input id="variable-search" type="search" placeholder="Find a variable" aria-label="Find a variable"></label>
+            </div>
+            <p class="card-description">R-compatible quartiles, sample standard deviation, and transparent IQR outlier counts.</p>
+            <div class="table-scroll summary-scroll"><table class="data-table summary-table"><thead><tr><th>VARIABLE</th><th>TYPE</th><th class="number-cell">N</th><th class="number-cell">MISSING</th><th class="number-cell">UNIQUE</th><th class="number-cell">MEAN</th><th class="number-cell">MEDIAN</th><th class="number-cell">SD</th><th class="number-cell">IQR</th><th class="number-cell">OUTLIERS</th></tr></thead><tbody id="summary-body"></tbody></table></div>
+            <div id="no-variable-results" class="empty-inline" hidden>No variables match that search.</div>
+            <div class="table-bottomline"><span>Numeric summaries use finite values only.</span><button class="table-link" type="button" data-open-tab="explore">Explore a variable <span aria-hidden="true">→</span></button></div>
+          </article>
+        </section>
+
+        <section class="tab-panel" role="tabpanel" id="panel-explore" aria-labelledby="tab-explore" hidden>
+          <div class="explore-grid">
+            <article class="surface-card chart-card">
+              <div class="card-heading chart-heading"><div><p class="section-kicker">DISTRIBUTION VIEW</p><h3 id="chart-title">Explore a variable</h3></div>
+                <div class="select-wrap"><label for="variable-select">VARIABLE</label><select id="variable-select"></select></div>
+              </div>
+              <p id="chart-caption" class="card-description">Choose a variable to see its distribution.</p>
+              <div class="chart-wrap"><canvas id="distribution-chart" aria-label="Variable distribution chart"></canvas><div id="chart-empty" class="chart-empty" hidden>Not enough usable values to draw a chart.</div></div>
+              <div class="chart-footer"><span id="chart-legend"><span class="legend-dot"></span> Observations</span><span id="chart-count"></span></div>
+            </article>
+            <article class="surface-card detail-card">
+              <div class="card-heading"><div><p class="section-kicker">SUMMARY STATISTICS</p><h3 id="detail-title">Selected variable</h3></div><span id="detail-type" class="type-chip">—</span></div>
+              <div id="numeric-details" class="detail-grid"></div>
+              <div id="category-details" class="category-detail" hidden></div>
+              <div class="detail-method"><span class="method-mark" aria-hidden="true">i</span><span id="method-note">Statistics are calculated in this browser from non-missing values.</span></div>
+            </article>
+          </div>
+        </section>
+
+        <details class="methods-card">
+          <summary><span class="methods-icon" aria-hidden="true">∑</span><span><strong>How these numbers are calculated</strong><small>Transparent methods, no black boxes</small></span><span class="methods-chevron" aria-hidden="true">⌄</span></summary>
+          <div class="methods-content">
+            <p>Empty CSV cells are treated as missing. Numeric columns are recognized when all non-empty values are finite numbers. Quantiles use R's type 7 definition; standard deviation uses the sample formula with <em>n − 1</em> in the denominator.</p>
+            <div class="formula-grid"><div><b>Quartiles</b><span>Linear interpolation at (n − 1)p</span></div><div><b>IQR outliers</b><span>x &lt; Q1 − 1.5 × IQR or x &gt; Q3 + 1.5 × IQR</span></div><div><b>Scaled MAD</b><span>median(|x − median(x)|) × 1.4826</span></div><div><b>Skew &amp; kurtosis</b><span>Standardized third and fourth moments; kurtosis is excess</span></div></div>
+            <p class="methods-caveat">The browser app provides exploratory diagnostics, not inferential conclusions. For normality tests, grouped profiles, and reproducible Quarto reports, use the <a href="https://CRAN.R-project.org/package=DataSum">DataSum R package</a>.</p>
+          </div>
+        </details>
+
+        <footer class="page-footer"><span>DataSum <span id="footer-year"></span> · Open research software</span><span>Built for a careful first look.</span><a href="https://doi.org/10.5281/zenodo.21352624">Cite DataSum ↗</a></footer>
+      </section>
+    </main>
+  </body>
+</html>
+

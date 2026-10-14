@@ -1,53 +1,47 @@
-# Hosting the DataSum web app
+# Publish the DataSum browser app on Cloudflare Pages
 
-This repository contains a production entry point at
-`inst/shiny-app/app.R` and a GitHub Actions workflow named **Deploy DataSum
-Shiny app**. Together they publish the interactive DataSum interface to
-[shinyapps.io](https://www.shinyapps.io/) without requiring visitors to install
-R or DataSum.
+The browser app is a static site. It reads a CSV and calculates summaries in
+the visitor's browser, so visitors do not install R and their CSV is not sent
+to DataSum or Cloudflare. Cloudflare still receives the normal request
+metadata needed to serve a public website.
 
-After deployment, the public URL is:
+## One-time setup
 
-```text
-https://<your-shinyapps-account>.shinyapps.io/datasum/
-```
+1. Sign in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and open
+   **Workers & Pages**.
+2. Choose **Create application**, then **Pages** and **Connect to Git**.
+3. Connect GitHub if asked, then choose **Uzairkhan11w/DataSum**.
+4. Set the production branch to `master`.
+5. Choose **None** for the framework preset. Leave the root directory and build
+   command empty. Set the build output directory to `web`.
+6. Create and deploy the project. Cloudflare will show the public address as
+   `https://<project-name>.pages.dev` after the first deployment succeeds.
 
-The deployment workflow installs DataSum from the exact GitHub commit being
-deployed. This keeps the hosted app aligned with the current 1.0.0 source even
-while CRAN mirrors are still catching up.
+Choose the project name carefully. Cloudflare does not let you change a
+project's `pages.dev` subdomain later. A suggested name is
+`datasum-uzairkhan11w`, which gives `https://datasum-uzairkhan11w.pages.dev/`
+if that name is available.
 
-## One-time owner setup
+After the site is live, put its exact URL in the launch link at the top of the
+GitHub README. The Cloudflare dashboard step is needed because the Pages
+project must be created inside the owner's Cloudflare account.
 
-1. Create or sign in to a shinyapps.io account. Choosing
-   `uzairkhan11w` as the account name is ideal if it is available.
-2. In the shinyapps.io dashboard, open your profile menu and choose
-   **Tokens**. Create or reveal a token and secret.
-3. In the DataSum GitHub repository, open
-   **Settings -> Secrets and variables -> Actions -> New repository secret**.
-4. Add these three repository secrets:
+## Future updates
 
-   | Secret name | Value |
-   |---|---|
-   | `SHINYAPPS_ACCOUNT` | Your shinyapps.io account name |
-   | `SHINYAPPS_TOKEN` | The token from shinyapps.io |
-   | `SHINYAPPS_SECRET` | The secret from shinyapps.io |
+Cloudflare's Git integration automatically deploys new commits from `master`.
+The project serves the contents of the `web` directory, so the build command
+stays empty and no R installation or build service is needed.
 
-   Keep the token and secret private. Do not place them in source files,
-   issues, screenshots, or chat messages.
-5. Open the repository's **Actions** tab, select **Deploy DataSum Shiny app**,
-   choose **Run workflow**, and run it on `master`.
-6. When the run is green, open the URL shown in the workflow summary. The app
-   will be available publicly at the URL above.
+## What the browser app includes
 
-## Updates
+- CSV upload and drag-and-drop, with an illustrative dataset available on load
+- Dataset size, completeness, per-variable missingness, and duplicate-row scan
+- Numeric summaries, distribution charts, and categorical frequency charts
+- IQR outlier flags and downloadable summary CSV
+- Method notes for quantiles, sample standard deviation, MAD, skewness,
+  kurtosis, and the IQR rule
 
-Future changes to the DataSum R code, app entry point, package metadata, or
-this workflow automatically redeploy the public app after the three secrets are
-configured. Documentation-only edits do not trigger deployment.
+The browser app is an exploratory first look. For normality tests, grouped
+summaries, and reproducible Quarto reports, install the full DataSum R package
+from CRAN.
 
-## Data handling
-
-The app does not intentionally save uploaded CSV files. However, it is a public
-cloud service: users should not upload confidential, personally identifiable,
-or restricted research data unless an appropriate institutional hosting and
-data-protection arrangement is in place.

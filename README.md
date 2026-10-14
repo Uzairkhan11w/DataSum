@@ -9,6 +9,8 @@
   <a href="https://doi.org/10.5281/zenodo.21352624"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.21352624.svg" alt="Zenodo DOI"></a>
 </p>
 
+<p align="center"><a href="https://github.com/Uzairkhan11w/DataSum/blob/master/HOSTING.md#one-time-setup"><strong>Browser app · Cloudflare Pages setup →</strong></a></p>
+
 <p align="center"><strong>From first look to reproducible report.</strong></p>
 
 DataSum is an R toolkit for rigorous first-pass data diagnostics. It helps
@@ -49,7 +51,7 @@ profile$warnings
 | Grouped profiles | How do variables differ across treatments, classes, or cohorts? |
 | Analyst warnings | Which missingness, duplicate, outlier, or distribution issues need attention? |
 | Reproducible reports | Can the diagnostic record be shared as Quarto HTML, PDF, or DOCX? |
-| Interactive app | Can a non-programmer upload a CSV and explore the same diagnostics? |
+| Browser app | Can someone inspect missingness, summaries, and distributions without installing R? |
 
 ## Clean 1.0 API
 
@@ -82,22 +84,28 @@ Normality output is deliberately cautious. DataSum reports **evidence against
 normality** or **no evidence against normality**; it does not claim that a
 sample has proven a population distribution.
 
-## Launch the app
+## Browser app
+
+DataSum includes a static browser app in `web/`. It accepts CSV files and
+calculates summaries, missingness, IQR outlier flags, and charts in the
+browser; the CSV itself is not uploaded. The first public deployment requires
+connecting this repository to Cloudflare Pages once. Follow the
+[Cloudflare Pages setup guide](https://github.com/Uzairkhan11w/DataSum/blob/master/HOSTING.md#one-time-setup).
+After deployment, this section and the top launch link will point directly to
+the live `pages.dev` app.
+
+For normality tests, grouped profiles, and reproducible Quarto reports, use
+the full DataSum R package.
+
+## Launch the Shiny app from R
 
 ```r
 run_datasum_app()
 ```
 
-The Shiny app opens in your browser and provides:
-
-- CSV upload
-- dataset and variable diagnostics
-- warning tables
-- numeric histograms and categorical bar charts
-- downloadable Quarto report source
-
-This launches locally on your computer. A public hosted version is part of the
-project roadmap.
+This opens the optional Shiny interface on your computer. It supports CSV
+upload, dataset and variable diagnostics, warning tables, plots, and a
+Quarto report source download.
 
 ## Create a reproducible report
 
