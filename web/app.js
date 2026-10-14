@@ -3,6 +3,7 @@
 
   const MAX_FILE_BYTES = 25 * 1024 * 1024;
   const MAX_ROWS = 250000;
+  const MAX_CELLS = 500000;
   const SAMPLE = {
     name: 'Example study data',
     headers: ['participant', 'cohort', 'study_hours', 'score', 'completed'],
@@ -467,6 +468,16 @@
     let row = [];
     let field = '';
     let quoted = false;
+    let parsedCells = 0;
+    function pushField() {
+      row.push(field);
+      field = '';
+      parsedCells += 1;
+      if (parsedCells > MAX_CELLS) {
+        throw new Error(`This CSV has more than ${MAX_CELLS.toLocaleString()} cells. Try a smaller selection or use the DataSum R package for larger datasets.`);
+      }
+      if (row.length > 500) throw new Error('This CSV has more than 500 columns. Reduce the number of columns and try again.');
+    }
     for (let index = 0; index < source.length; index += 1) {
       const char = source[index];
       if (quoted) {
@@ -477,23 +488,26 @@
         if (field.length) throw new Error('A quote appears in the middle of a field. Please check the CSV formatting.');
         quoted = true;
       } else if (char === ',') {
-        row.push(field); field = '';
+        pushField();
       } else if (char === '\n' || char === '\r') {
-        row.push(field); field = '';
-        if (row.some((value) => value.trim() !== '')) rows.push(row);
+        pushField();
+        if (row.some((value) => value.trim() !== '')) {
+          rows.push(row);
+          if (rows.length > MAX_ROWS + 1) throw new Error(`This file has more than ${MAX_ROWS.toLocaleString()} rows. Use the DataSum R package for larger datasets.`);
+        }
         row = [];
         if (char === '\r' && source[index + 1] === '\n') index += 1;
       } else field += char;
     }
     if (quoted) throw new Error('A quoted field was not closed. Please check the CSV formatting.');
     if (field.length || row.length) {
-      row.push(field);
+      pushField();
       if (row.some((value) => value.trim() !== '')) rows.push(row);
     }
     if (rows.length < 2) throw new Error('This file has no observations yet. Add a header row and at least one observation.');
-    if (rows.length - 1 > MAX_ROWS) throw new Error(`This file has more than ${MAX_ROWS.toLocaleString()} rows. Try a smaller CSV or use the DataSum R package for larger datasets.`);
+    if (rows.length - 1 > MAX_ROWS) throw new Error(`This file has more than ${MAX_ROWS.toLocaleString()} rows. Use the DataSum R package for larger datasets.`);
     const width = Math.max(...rows.map((values) => values.length));
-    if (width > 500) throw new Error('This CSV has more than 500 columns. Reduce the number of columns and try again.');
+    if (width * rows.length > MAX_CELLS) throw new Error(`This CSV expands beyond ${MAX_CELLS.toLocaleString()} cells because rows have different widths. Try a rectangular, smaller file.`);
     const originalHeaders = rows.shift();
     const headers = [];
     const seen = new Map();

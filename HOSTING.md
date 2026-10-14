@@ -40,6 +40,7 @@ stays empty and no R installation or build service is needed.
 - IQR outlier flags and downloadable summary CSV
 - Method notes for quantiles, sample standard deviation, MAD, skewness,
   kurtosis, and the IQR rule
+- Upload guardrails of 25 MB, 250,000 observations, and 500,000 cells
 
 The browser app is an exploratory first look. For normality tests, grouped
 summaries, and reproducible Quarto reports, install the full DataSum R package
