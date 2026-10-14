@@ -9,6 +9,7 @@
   <a href="https://doi.org/10.5281/zenodo.21352624"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.21352624.svg" alt="Zenodo DOI"></a>
 </p>
 
+<p align="center"><a href="https://datasum.pages.dev/"><strong>Open DataSum in your browser →</strong></a></p>
 
 <p align="center"><strong>From first look to reproducible report.</strong></p>
 
@@ -85,13 +86,14 @@ sample has proven a population distribution.
 
 ## Browser app
 
-DataSum includes a no-install browser interface in `web/` for a first look at a
-CSV dataset. It calculates summaries, missingness, IQR outlier flags, and
-charts locally in your browser; uploaded data is not sent to DataSum.
+**[Launch DataSum in your browser →](https://datasum.pages.dev/)**
 
-The public launch link will be added here once the hosted app is online. For
-normality tests, grouped profiles, and reproducible Quarto reports, install the
-full DataSum R package from CRAN.
+Explore a CSV without installing R. DataSum calculates summaries,
+missingness, IQR outlier flags, and charts locally in your browser; your
+uploaded dataset is not sent to DataSum.
+
+For normality tests, grouped profiles, and reproducible Quarto reports, install
+the full DataSum R package from CRAN.
 
 ## Create a reproducible report
 
